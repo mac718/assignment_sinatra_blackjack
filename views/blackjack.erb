@@ -1,0 +1,7 @@
+<h1>Click 'Hit' to get another card, 'Stay' to keep your hand as is.</h1>
+<p>Your hand: <%= session[:player_hand] %></p>
+<p>Dealer's hand: <%= session[:computer_hand] %></p>
+<form action="/blackjack/hit" method="post">
+<input type="submit"  value="Hit!">
+<input type="submit" value="Stay">
+</form>
