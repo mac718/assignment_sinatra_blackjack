@@ -22,7 +22,19 @@ helpers do
     session[:deck].pop
   end
   def calculate_total(hand)
-    hand.reduce{ |total, card| total + card[1] }
+    total = 0
+    card_values = hand.map { |card| card[0] }
+    card_values.each do |card|
+      binding.pry
+      if card.class == Fixnum 
+        total += card 
+      elsif card == 'Ace'
+        total < 21 ? total += 1 : total += 11
+      else 
+        total += 10 
+      end
+    end
+    total
   end
 end
 
@@ -33,11 +45,14 @@ end
 get '/blackjack'do
   session[:player_hand] = deal_hand
   session[:computer_hand] = deal_hand
-  binding.pry
+  
   erb :blackjack
 end
 
 post '/blackjack/hit' do 
   session[:player_hand] << hit
+  
+  @player_total = calculate_total(session[:player_hand])
+  redirect to('/blackjack/stay') if @player_total > 21
   erb :blackjack
 end

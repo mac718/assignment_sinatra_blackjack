@@ -1,5 +1,6 @@
 <h1>Click 'Hit' to get another card, 'Stay' to keep your hand as is.</h1>
 <p>Your hand: <%= "[card 1]" %> <%= session[:player_hand][1..-1].map do |card| card[0] end.join(', ') %></p>
+<p>Your total: <%= @player_total %></p>
 <p>Dealer's hand: <%= "[card 1] #{session[:computer_hand][1..-1]}" %></p>
 <form action="/blackjack/hit" method="post">
 <input type="submit"  value="Hit!">
