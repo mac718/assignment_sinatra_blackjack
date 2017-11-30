@@ -1,0 +1,7 @@
+<h1>Game Results!</h1>
+<p>Your hand: <%= session[:player_hand].map do |card| card[0] end.join(', ') %></p>
+<p>Your total: <%= @player_total %></p>
+<p>Dealer's hand: <%= session[:computer_hand].map do |card| card[0] end.join(', ') %></p>
+<p>Computer's total: <%= @computer_total %></p>
+
+

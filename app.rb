@@ -25,16 +25,23 @@ helpers do
     total = 0
     card_values = hand.map { |card| card[0] }
     card_values.each do |card|
-      binding.pry
       if card.class == Fixnum 
         total += card 
       elsif card == 'Ace'
-        total < 21 ? total += 1 : total += 11
+        total += 11
       else 
         total += 10 
       end
     end
+    card_values.select { |value| value == 'Ace' }.count.times do
+      total -= 10 if total > 21
+    end
     total
+  end
+  def play_computer_hand
+    while calculate_total(session[:computer_hand]) < 17
+      session[:computer_hand] << hit
+    end
   end
 end
 
@@ -42,17 +49,26 @@ get '/' do
   erb :home
 end
 
-get '/blackjack'do
+get '/blackjack' do
   session[:player_hand] = deal_hand
   session[:computer_hand] = deal_hand
-  
+
   erb :blackjack
 end
 
 post '/blackjack/hit' do 
   session[:player_hand] << hit
-  
   @player_total = calculate_total(session[:player_hand])
-  redirect to('/blackjack/stay') if @player_total > 21
-  erb :blackjack
+  if @player_total > 21
+    redirect to('/blackjack/stay')
+  else
+    erb :blackjack
+  end
+end
+
+get '/blackjack/stay' do 
+  play_computer_hand
+  @computer_total = calculate_total(session[:computer_hand])
+  @player_total = calculate_total(session[:player_hand])
+  erb :"blackjack/show_results"
 end
