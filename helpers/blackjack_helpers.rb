@@ -1,19 +1,11 @@
 module BlackjackHelpers
-  def create_deck
-    ['Ace', 2, 3, 4, 5, 6, 7, 8, 9 ,10, 'Jack', 'Queen', 'King'].product(['S', 'C', 'D', 'H'])
-  end
-
-  def deal_hand
-    session[:deck] = create_deck.shuffle
+ 
+  def deal_hand(deck)
     hand = []
     2.times do 
-      hand << session[:deck].pop
+      hand << deck.pop
     end
     hand
-  end
-
-  def hit
-    session[:deck].pop
   end
 
   def calculate_total(hand)
@@ -32,12 +24,6 @@ module BlackjackHelpers
       total -= 10 if total > 21
     end
     total
-  end
-
-  def play_computer_hand
-    while calculate_total(session[:computer_hand]) < 17
-      session[:computer_hand] << hit
-    end
   end
 
   def generate_results_message
