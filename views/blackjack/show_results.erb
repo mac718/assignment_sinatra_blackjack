@@ -2,10 +2,10 @@
 <p>Your hand: <%= @player_hand.map do |card| card[0] end.join(', ') %></p>
 <p>Your total: <%= @player_total %></p>
 <p>Dealer's hand: <%= @dealer_hand.map do |card| card[0] end.join(', ') %></p>
-<p>Computer's total: <%= @computer_total %></p>
+<p>Computer's total: <%= @dealer_total %></p>
 <br>
 <h2><%= @results_message %></h2>
 <h2>Your bankroll is now $<%= @player.bankroll %></h2>
-<a href="/bet">Next Hand</a>
+<h3><a href="/bet">Next Hand</a></h3>
 
 

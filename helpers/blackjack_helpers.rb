@@ -30,12 +30,52 @@ module BlackjackHelpers
     hand.size == 2 && calculate_total(hand) == 21
   end
 
-  def generate_results_message
-    if @computer_total > 21
+  def process_blackjack_hand(player_hand, dealer_hand, bet, bankroll)
+    if blackjack?(player_hand)
+      if blackjack?(dealer_hand)
+        bankroll += session[:bet]
+      else
+        bankroll += (session[:bet] + (session[:bet] * (3/2)))
+      end
+    end
+  end
+
+  def process_non_blackjack_hand(player_total, dealer_total, bet, bankroll)
+    if player_total > dealer_total || dealer_total > 21
+      
+
+      bankroll += (bet * 2)
+      binding.pry
+      session[:bankroll] = bankroll
+
+    elsif player_total == dealer_total
+      
+      bankroll += bet
+      binding.pry
+
+      session[:bankroll] = bankroll
+    else
+      binding.pry
+
+      session[:bankroll] = bankroll
+
+    end
+  end
+
+  def process_hand(player_hand, player_total, dealer_hand, dealer_total, bet, bankroll)
+    if blackjack?(player_hand)
+      process_blackjack_hand(player_hand, dealer_hand, bet, bankroll)
+    else
+      process_non_blackjack_hand(player_total, dealer_total, bet, bankroll)
+    end
+  end
+
+  def generate_results_message(dealer_total, player_total)
+    if dealer_total > 21
       "Dealer busts! You win!"
-    elsif @player_total > @computer_total
+    elsif player_total > dealer_total
       "Congrats! You win!"
-    elsif @computer_total > @player_total
+    elsif dealer_total > player_total
       "Dealer wins! Bummer!"
     else
       "It's a tie!"
