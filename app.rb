@@ -12,6 +12,7 @@ enable :sessions
 helpers BlackjackHelpers
 
 get '/' do 
+  session[:bankroll] = 1000
   erb :home
 end
 
@@ -20,7 +21,6 @@ get '/bet' do
 end
 
 post '/bet' do
-  #@player = Player.new('Mike', @deck.deck, session[:bankroll])
   session[:bet] = params[:bet].to_i
   redirect to('blackjack')
 end
@@ -29,7 +29,6 @@ get '/blackjack' do
   @deck = Deck.new
   @bet = session[:bet]
   @player = Player.new('Mike', @deck.deck, session[:bankroll] ||= 1000)
-  #binding.pry
   @bankroll = @player.bankroll - @bet
   session[:bankroll] = @bankroll
   @dealer = Dealer.new(@deck.deck)
