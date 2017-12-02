@@ -29,7 +29,12 @@ get '/blackjack' do
   @deck = Deck.new
   @bet = session[:bet]
   @player = Player.new('Mike', @deck.deck, session[:bankroll] ||= 1000)
-  @bankroll = @player.bankroll - @bet
+  unless enough_money?(session[:bankroll], @bet)
+    redirect to('/bet?not_enough_money=true')
+  else
+    @not_enough_money = true
+    @bankroll = @player.bankroll - @bet  
+  end
   session[:bankroll] = @bankroll
   @dealer = Dealer.new(@deck.deck)
   session[:deck] = @deck

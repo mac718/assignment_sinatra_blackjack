@@ -26,6 +26,10 @@ module BlackjackHelpers
     total
   end
 
+  def enough_money?(bankroll, bet)
+    bankroll - bet > 0
+  end
+
   def blackjack?(hand)
     hand.size == 2 && calculate_total(hand) == 21
   end
