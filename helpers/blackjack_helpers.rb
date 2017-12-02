@@ -26,6 +26,10 @@ module BlackjackHelpers
     total
   end
 
+  def blackjack?(hand)
+    hand.size == 2 && calculate_total(hand) == 21
+  end
+
   def generate_results_message
     if @computer_total > 21
       "Dealer busts! You win!"

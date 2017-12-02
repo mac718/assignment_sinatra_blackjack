@@ -2,8 +2,10 @@ require "./helpers/blackjack_helpers.rb"
 
 class Player 
   include BlackjackHelpers
-  attr_reader :hand
-  def initialize(name, deck)
+  attr_accessor :hand, :bankroll
+  
+  def initialize(name, deck, bankroll = 1000)
+    @bankroll = bankroll
     @name = name
     @hand = deal_hand(deck)
   end
