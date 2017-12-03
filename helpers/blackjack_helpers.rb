@@ -46,23 +46,13 @@ module BlackjackHelpers
 
   def process_non_blackjack_hand(player_total, dealer_total, bet, bankroll)
     if player_total > dealer_total || dealer_total > 21
-      
-
       bankroll += (bet * 2)
-      binding.pry
       session[:bankroll] = bankroll
-
     elsif player_total == dealer_total
-      
       bankroll += bet
-      binding.pry
-
       session[:bankroll] = bankroll
     else
-      binding.pry
-
       session[:bankroll] = bankroll
-
     end
   end
 
