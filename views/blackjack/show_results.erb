@@ -1,8 +1,9 @@
 <h1>Game Results!</h1>
-<p>Your hand: <%= @player_hand.map do |card| card[0] end.join(', ') %></p>
-<p>Your total: <%= @player_total %></p>
-<p>Dealer's hand: <%= @dealer_hand.map do |card| card[0] end.join(', ') %></p>
-<p>Computer's total: <%= @dealer_total %></p>
+<br>
+<h4>Your hand: <%= @player_hand.map do |card| card[0] end.join(', ') %></h4>
+<h4>Your total: <%= @player_total %></h4>
+<h4>Dealer's hand: <%= @dealer_hand.map do |card| card[0] end.join(', ') %></h4>
+<h4>Computer's total: <%= @dealer_total %></h4>
 <br>
 <h2><%= @results_message %></h2>
 <h2>Your bankroll is now $<%= @player.bankroll %></h2>
