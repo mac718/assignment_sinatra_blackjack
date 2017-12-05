@@ -26,31 +26,30 @@ post '/bet' do
 end
 
 get '/blackjack' do
-  @deck = Deck.new
-  @bet = session[:bet]
-  @player = Player.new('Mike', @deck.deck, session[:bankroll] ||= 1000)
-  unless enough_money?(session[:bankroll], @bet)
+  deck = Deck.new
+  bet = session[:bet]
+  player = Player.new('Mike', deck.deck, session[:bankroll] ||= 1000)
+  unless enough_money?(session[:bankroll], bet)
     redirect to('/bet?not_enough_money=true')
   else
-    @not_enough_money = true
-    @bankroll = @player.bankroll - @bet  
+    @bankroll = player.bankroll - bet  
   end
   session[:bankroll] = @bankroll
-  @dealer = Dealer.new(@deck.deck)
-  session[:deck] = @deck
-  session[:player_hand] = @player.hand
-  session[:dealer_hand] = @dealer.hand
+  dealer = Dealer.new(deck.deck)
+  session[:deck] = deck
+  session[:player_hand] = player.hand
+  session[:dealer_hand] = dealer.hand
   erb :blackjack
 end
 
 post '/blackjack/hit' do 
-  @deck = session[:deck]
-  @player = Player.new('Mike', @deck.deck, session[:bankroll] ||= 1000)
-  @player_hand = session[:player_hand]
-  @player_hand << @player.hit(@deck.deck)
-  @player_total = calculate_total(@player_hand)
-  if @player_total > 21
-    @player_hand.pop
+  deck = session[:deck]
+  player = Player.new('Mike', deck.deck, session[:bankroll] ||= 1000)
+  player_hand = session[:player_hand]
+  player_hand << player.hit(deck.deck)
+  player_total = calculate_total(player_hand)
+  if player_total > 21
+    player_hand.pop
     redirect to('/blackjack/stay')
   else
     erb :blackjack
@@ -58,17 +57,17 @@ post '/blackjack/hit' do
 end
 
 get '/blackjack/stay' do 
-  @deck = session[:deck]
-  @bankroll = session[:bankroll]
-  @bet = session[:bet]
-  @player = Player.new('Mike', @deck.deck, session[:bankroll])
-  @dealer = Dealer.new(@deck.deck)
+  deck = session[:deck]
+  bankroll = session[:bankroll]
+  bet = session[:bet]
+  @player = Player.new('Mike', deck.deck, session[:bankroll])
+  dealer = Dealer.new(deck.deck)
   @player_hand = session[:player_hand]
   @dealer_hand = session[:dealer_hand]
-  @dealer.play_dealer_hand(@dealer_hand, @deck.deck)
+  dealer.play_dealer_hand(@dealer_hand, deck.deck)
   @dealer_total = calculate_total(@dealer_hand)
   @player_total = calculate_total(@player_hand)
-  process_hand(@player_hand, @player_total, @dealer_hand, @dealer_total, @bet, @bankroll)
+  process_hand(@player_hand, @player_total, @dealer_hand, @dealer_total, bet, bankroll)
   @player.bankroll = session[:bankroll]
   @results_message = generate_results_message(@dealer_total, @player_total)
   erb :"blackjack/show_results"

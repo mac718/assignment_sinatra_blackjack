@@ -1,8 +1,8 @@
 <h1>Place your bet!</h1>
 <% if params[:not_enough_money] %>
-  <h2>You don't have enough money for that bet!</h2>
+  <h2 id="money-warning">You don't have enough money for that bet!</h2>
 <% end %>
 <form action="/bet" method='post'>
   <input type="text" name="bet">
-  <input type="submit" value="Place Bet">
+  <input class="btn btn-outline-success btn-lg" type="submit" value="Place Bet">
 </form>

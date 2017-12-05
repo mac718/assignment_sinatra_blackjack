@@ -2,8 +2,8 @@
 <h4>Your hand: <%= "[card 1]" %> <%= session[:player_hand][1..-1].map do |card| card[0] end.join(', ') %></h4>
 <h4>Dealer's hand: <%= "[card 1]" %> <%= session[:dealer_hand][1..-1].map do |card| card[0] end.join(', ') %></h4>
 <form action="/blackjack/hit" method="post">
-  <input class="btn btn-outline-danger btn-lg" width="100px" type="submit"  value="Hit!">
+  <input class="btn btn-outline-success btn-lg" width="100px" type="submit"  value="Hit!">
 </form>
 <form action="/blackjack/stay" method="get">
-  <input class="btn btn-outline-success btn-lg" width="100px" type="submit" value="Stay">
+  <input class="btn btn-outline-danger btn-lg" width="100px" type="submit" value="Stay">
 </form>
